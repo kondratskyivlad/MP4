@@ -1,7 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import {StyleSheet, View, Dimensions, Image, Text, ScrollView} from 'react-native';
+import React, { useState } from 'react';
+import {StyleSheet, View, Dimensions,
+    Image, Text, ScrollView, TouchableNativeFeedback } from 'react-native';
 import MoviesList from '../MoviesList.json'
-import { Card, ListItem, Button, Icon } from 'react-native-elements'
+import {Card, ListItem, Button, Header, Input} from 'react-native-elements'
+import { getImage } from '../constants/data'
+import Icon from 'react-native-vector-icons/FontAwesome'
+import { Appbar, TextInput } from 'react-native-paper';
+import SearchBar from "react-native-dynamic-search-bar";
+
+// import {NavigationContainer} from "@react-navigation/native";
 
 const portrait_styles = StyleSheet.create({
     MainContainer: {
@@ -102,45 +109,93 @@ const orientation = () => {
     }
 }
 
+const MyTheme = {
+    dark: false,
+    colors: {
+        primary: '#beae8d',
+        background: 'rgb(242, 242, 242)',
+        card: 'rgb(255, 255, 255)',
+        text: 'rgb(28, 28, 30)',
+        border: 'rgb(199, 199, 204)',
+        notification: 'rgb(255, 69, 58)',
+    },
+};
+
+const inputTheme = {
+    dark: false,
+    colors: {
+        primary: '#bdae8d',
+        background: '#bdae8d',
+        text: 'rgb(28, 28, 30)',
+    },
+};
+
 let data = [];
 
 MoviesList.Search.map((item, i) => (
     data.push(item)
 ))
 
-const getImage = (item) => {
-    switch (item) {
-        case 'Poster_01.jpg':
-            return require('../assets/posters/Poster_01.jpg');
-        case 'Poster_02.jpg':
-            return require('../assets/posters/Poster_02.jpg');
-        case 'Poster_03.jpg':
-            return require('../assets/posters/Poster_03.jpg');
-        case 'Poster_05.jpg':
-            return require('../assets/posters/Poster_05.jpg');
-        case 'Poster_06.jpg':
-            return require('../assets/posters/Poster_06.jpg');
-        case 'Poster_07.jpg':
-            return require('../assets/posters/Poster_07.jpg');
-        case 'Poster_08.jpg':
-            return require('../assets/posters/Poster_08.jpg');
-        case 'Poster_10.jpg':
-            return require('../assets/posters/Poster_10.jpg');
-        default:
-            return require('../assets/Coming-Soon.png');
+function headerToHome() {
+    return (
+        <View>
+            <Icon
+                style={[{color: '#eee',  position: 'relative'}]}
+                size={25}
+                name={'home'}
+            />
+        </View>
+    )
+}
+
+function Movie({navigation}, props){
+
+    const [text, setText] = React.useState('');
+
+    const handleSearch = () => {
+        console.log('Searching');
     }
-};
 
+    const goHome = () => {
+        navigation.navigate('Home');
+    }
 
-const Movie = () => {
+    const handleAdd = () => {
+        console.log('Adding');
+    }
+
     return (
         <ScrollView>
-            <View style={orientation().MainContainer}>
+            <View>
+                <Appbar.Header theme={MyTheme}>
+                    <Appbar.Action icon="home" onPress={goHome} />
+                    <SearchBar
+                        placeholder="Search here"
+                        onPress={() => alert("onPress")}
+                        onChangeText={(text) => console.log(text)}
+                        style={{flex: 1}}
+                    />
+                    <Appbar.Action icon="plus" onPress={handleAdd} />
+                </Appbar.Header>
+            </View>
+            <View style={orientation().MainContainer} test={'test'}>
                 {
-                    data.map((item, i) => {
+                    data.map((item, index) => {
                         return(
-                            <View style={orientation().CardContainer}>
-                                <Card key={item.imdbID}>
+                            <TouchableNativeFeedback
+                                style={orientation().CardContainer}
+                                key={index}
+                                onPress={() => {
+                                    navigation.navigate('Details');
+                                    console.log(item.imdbID);
+                                    navigation.navigate('Details', {
+                                        Title: item.Title,
+                                        Poster: item.Poster,
+                                        Type: item.Type,
+                                    });
+                                }}
+                            >
+                                <Card>
                                     <Text style={orientation().title}>{
                                         item.Title.length >= 20 ?
                                             item.Title.slice(0, 85 - 1) + '…'
@@ -167,7 +222,7 @@ const Movie = () => {
                                         </View>
                                     </View>
                                 </Card>
-                            </View>
+                            </TouchableNativeFeedback>
                         )
                     })
                 }
@@ -176,4 +231,4 @@ const Movie = () => {
     )
 }
 
-export default  Movie
+export default Movie

@@ -8,6 +8,8 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import { Appbar, TextInput } from 'react-native-paper';
 import SearchBar from "react-native-dynamic-search-bar";
 
+// Доробити setState в пошуку фільмів строка 138
+
 // import {NavigationContainer} from "@react-navigation/native";
 
 const portrait_styles = StyleSheet.create({
@@ -121,48 +123,45 @@ const MyTheme = {
     },
 };
 
-const inputTheme = {
-    dark: false,
-    colors: {
-        primary: '#bdae8d',
-        background: '#bdae8d',
-        text: 'rgb(28, 28, 30)',
-    },
-};
-
 let data = [];
 
 MoviesList.Search.map((item, i) => (
     data.push(item)
 ))
 
-function headerToHome() {
-    return (
-        <View>
-            <Icon
-                style={[{color: '#eee',  position: 'relative'}]}
-                size={25}
-                name={'home'}
-            />
-        </View>
-    )
-}
+function Movie({navigation, route}){
 
-function Movie({navigation}, props){
+    const [movieData, setMovieData] = React.useState(data)
+    const [term, setTerm] = React.useState('')
 
-    const [text, setText] = React.useState('');
 
-    const handleSearch = () => {
-        console.log('Searching');
+    const filteredItems = (items, term) => {
+        if(term.length === 0) {
+            return items
+        }
+        return items.filter((item) => {
+            if(
+                item.Title.indexOf(term) > -1 ||
+                item.Year.indexOf(term) > -1 ||
+                item.Type.indexOf(term) > -1) {
+                return (
+                    item
+                )
+            }
+        })
     }
+    const visibleItems = filteredItems(movieData, term)
 
     const goHome = () => {
         navigation.navigate('Home');
     }
 
-    const handleAdd = () => {
-        console.log('Adding');
-    }
+    const deleteElement = (id) => {
+        const idx = movieData.findIndex((el) => el.imdbID === id)
+        const newData = [...movieData.slice(0, idx),...movieData.slice(idx + 1)]
+        setMovieData(newData)
+    };
+
 
     return (
         <ScrollView>
@@ -175,12 +174,20 @@ function Movie({navigation}, props){
                         onChangeText={(text) => console.log(text)}
                         style={{flex: 1}}
                     />
-                    <Appbar.Action icon="plus" onPress={handleAdd} />
+                    <Appbar.Action
+                        icon="plus"
+                        onPress={() => {
+                            navigation.navigate('AddForm', {
+                                movieData:  movieData,
+                                setMovieData: setMovieData
+                            });
+                        }}
+                    />
                 </Appbar.Header>
             </View>
-            <View style={orientation().MainContainer} test={'test'}>
+            <View style={orientation().MainContainer}>
                 {
-                    data.map((item, index) => {
+                    visibleItems.map((item, index) => {
                         return(
                             <TouchableNativeFeedback
                                 style={orientation().CardContainer}
@@ -196,6 +203,21 @@ function Movie({navigation}, props){
                                 }}
                             >
                                 <Card>
+                                    <View>
+                                        <Icon
+                                            onPress={() => {
+                                                deleteElement(item.imdbID)
+                                            }}
+                                            style={[{
+                                                color: '#000',
+                                                flex: 0,
+                                                textAlign: 'center',
+                                                alignItems: "center",
+                                            }]}
+                                            size={25}
+                                            name={'trash'}
+                                        />
+                                    </View>
                                     <Text style={orientation().title}>{
                                         item.Title.length >= 20 ?
                                             item.Title.slice(0, 85 - 1) + '…'

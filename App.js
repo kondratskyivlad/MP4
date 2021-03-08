@@ -8,6 +8,7 @@ import Home from "./components/home";
 import Profile from "./components/profile";
 import Movie from "./components/movie";
 import Info from "./components/info";
+import AddForm from "./components/addForm";
 
 const MyTheme = {
     dark: false,
@@ -44,6 +45,10 @@ const movieStackScreen = () => {
             <Stack.Screen
                 name="Details"
                 component={Info}
+            />
+            <Stack.Screen
+                name="AddForm"
+                component={AddForm}
             />
         </Stack.Navigator>
     )

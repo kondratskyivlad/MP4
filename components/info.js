@@ -3,6 +3,7 @@ import {StyleSheet, View, Dimensions, Image, Text, ScrollView} from 'react-nativ
 import MoviesList from '../MoviesList.json'
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { getImage } from '../constants/data'
+import { getFullInfo } from '../constants/data'
 
 const dim = Dimensions.get('screen');
 
@@ -105,36 +106,10 @@ const orientation = () => {
     }
 }
 
-const Info = ({navigation, route}, props) => {
+const Info = ({route}) => {
     const { Title } = route.params;
     const { Poster } = route.params;
     const { Type } = route.params;
-
-
-    const getFullInfo = (item) => {
-        switch (item) {
-            case 'Star Wars: Episode IV - A New Hope Star Wars: Episode IV - A New Hope':
-                return require('../assets/infoData/tt0076759.json');
-            case 'Star Wars: Episode V - The Empire Strikes Back':
-                return require('../assets/infoData/tt0080684.json');
-            case 'Star Wars: Episode VI - Return of the Jedi':
-                return require('../assets/infoData/tt0086190.json');
-            case 'Star Wars: Episode VII - The Force Awakens':
-                return require('../assets/infoData/tt2488496.json');
-            case 'Star Wars: Episode I - The Phantom Menace':
-                return require('../assets/infoData/tt0120915.json');
-            case 'Star Wars: Episode III - Revenge of the Sith':
-                return require('../assets/infoData/tt0121766.json');
-            case 'Star Wars: Episode II - Attack of the Clones':
-                return require('../assets/infoData/tt0121765.json');
-            case 'Star Trek':
-                return require('../assets/infoData/tt0796366.json');
-            case 'Star Wars: Episode VIII - The Last Jedi':
-                return require('../assets/infoData/tt2527336.json');
-            case 'Rogue One: A Star Wars Story':
-                return require('../assets/infoData/tt3748528.json');
-        }
-    };
 
     let data = []
 

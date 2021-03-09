@@ -226,14 +226,13 @@ function Movie({navigation}){
                                         flexWrap: 'wrap',
                                     }}>
                                         <Text style={orientation().title}>{
-                                            item.Title.length >= 20 ?
-                                                item.Title.slice(0, 85 - 1) + '…'
+                                            item.Title.length >= 60 ?
+                                                item.Title.slice(0, 50 - 1) + '…'
                                                 : item.Title
                                         }</Text>
                                         <View style={{
                                             marginLeft: 10,
                                             width: 20,
-                                            height: 25,
                                         }}>
                                             <Icon
                                                 onPress={() => {

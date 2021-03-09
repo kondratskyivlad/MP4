@@ -10,12 +10,12 @@ const portrait_styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: "center",
-        justifyContent: "center",
     },
     topRightContainer: {
-        //something like sheet
+        width: 180
     },
     imgContainer: {
+        marginLeft: '2%',
         marginTop: 25,
         height: 255,
         width: 155,
@@ -26,14 +26,13 @@ const portrait_styles = StyleSheet.create({
         borderRadius: 20,
     },
     txtTitle: {
-        width: 230,
+        width: 200,
         fontSize: 22,
         marginBottom: 5,
         fontWeight: 'bold'
     },
     topTxt: {
         color: '#292929',
-        width: 190,
         fontSize: 18,
         marginBottom: 5,
     },
@@ -60,12 +59,12 @@ const landscape_styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: "center",
-        justifyContent: "center",
     },
     topRightContainer: {
-        //something like sheet
+       width: 180,
     },
     imgContainer: {
+        marginLeft: '1%',
         marginTop: 25,
         height: 255,
         width: 155,
@@ -165,11 +164,6 @@ const Info = ({route}) => {
                                                 </Text>
                                             </View>
                                             <View>
-                                                <Text
-                                                    style={orientation().topTxt
-                                                }>
-                                                    Genre
-                                                </Text>
                                                 <Text
                                                     style={orientation().topTxt
                                                 }>

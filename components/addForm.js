@@ -1,30 +1,10 @@
 import React, { useState } from 'react';
-import {StyleSheet, View, Dimensions,
+import { View,
     Text, ScrollView,
-    TouchableOpacity} from 'react-native';
+    TouchableOpacity
+} from 'react-native';
 import { Button } from 'react-native-elements'
 import { FloatingLabelInput } from 'react-native-floating-label-input';
-
-
-
-const dim = Dimensions.get('screen');
-
-const portrait_styles = StyleSheet.create({
-
-});
-
-const landscape_styles = StyleSheet.create({
-
-});
-
-const orientation = () => {
-    const dim = Dimensions.get('screen');
-    if (dim.height >= dim.width) {
-        return portrait_styles
-    } else {
-        return landscape_styles
-    }
-}
 
 const submitBtn = {
     width: '50%',
@@ -37,7 +17,7 @@ const submitBtn = {
 };
 
 
-const AddForm = ({navigation, route}, props) => {
+const AddForm = ({navigation, route}) => {
 
     const [title, setTitle] = useState('');
     const [type, setType] = useState('');

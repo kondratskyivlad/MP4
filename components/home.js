@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {StyleSheet, Text, View, Switch, Dimensions} from 'react-native';
 import {LineChart, PieChart} from "react-native-chart-kit";
 import {data , labels} from '../constants/data'
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
 const portrait_styles = StyleSheet.create({
     container: {

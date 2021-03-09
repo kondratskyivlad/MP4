@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import {StyleSheet, View, Dimensions, Switch, Text} from 'react-native';
 import {LineChart, PieChart} from "react-native-chart-kit";
 import {data, labels} from "../constants/data";
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
 const portrait_styles = StyleSheet.create({
     container: {
@@ -56,7 +54,7 @@ const isPortraitForContainer = () => {
     }
 }
 
-function Profile({navigation}){
+function Profile(){
 
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);

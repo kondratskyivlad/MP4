@@ -56,7 +56,7 @@ const movieStackScreen = () => {
 
 const Tab = createMaterialBottomTabNavigator();
 
-const App = () => {
+export const App = () => {
     return (
         <NavigationContainer theme={MyTheme}>
             <Tab.Navigator
@@ -118,5 +118,3 @@ const App = () => {
         </NavigationContainer>
     );
 }
-
-export default App

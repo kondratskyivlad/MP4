@@ -1,6 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, Dimensions,
-    Image, Text, ScrollView, TouchableNativeFeedback } from 'react-native';
+    Image, Text,
+    ScrollView, TouchableNativeFeedback
+} from 'react-native';
 import MoviesList from '../MoviesList.json'
 import {Card} from 'react-native-elements'
 import { getImage } from '../constants/data'
@@ -126,7 +128,7 @@ MoviesList.Search.map((item, i) => (
     data.push(item)
 ))
 
-function Movie({navigation, route}){
+function Movie({navigation}){
 
     const [movieData, setMovieData] = React.useState(data)
     const [term, setTerm] = React.useState('')
@@ -222,7 +224,6 @@ function Movie({navigation, route}){
                                         flex: 1,
                                         flexDirection: 'row',
                                         flexWrap: 'wrap',
-                                        // justifyContent: 'space-around'
                                     }}>
                                         <Text style={orientation().title}>{
                                             item.Title.length >= 20 ?

@@ -1,99 +1,106 @@
-import React, { useState, useEffect } from 'react';
-import {StyleSheet, View, Dimensions, Image, Text, ScrollView} from 'react-native';
-import MoviesList from '../MoviesList.json'
-import { Card, ListItem, Button, Icon } from 'react-native-elements'
+import React from 'react';
+import {StyleSheet, View, Dimensions,
+    Image, Text, ScrollView, TouchableHighlight} from 'react-native';
 import { getImage } from '../constants/data'
 import { getFullInfo } from '../constants/data'
 
-const dim = Dimensions.get('screen');
-
 const portrait_styles = StyleSheet.create({
-    MainContainer: {
+    mainTopContainer: {
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: "center",
         justifyContent: "center",
     },
-    CardContainer: {
-        flex: 0,
-        alignItems: "center",
-        justifyContent: "space-between",
+    topRightContainer: {
+        //something like sheet
     },
-    ViewContainer: {
-        height: 300,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    title: {
-        fontSize: 20,
-        width: 250,
-        flex: 0,
-        textAlign: 'center',
-        alignItems: "center",
-        marginBottom: 10,
-    },
-    TextContainer: {
-        flexDirection: 'row',
-        alignItems: "center",
-        justifyContent: "space-between",
-    },
-    description: {
-        fontSize: 20,
-        flex: 0,
-        textAlign: 'center',
-        alignItems: "center",
-        flexWrap: 'wrap',
+    imgContainer: {
+        marginTop: 25,
+        height: 255,
+        width: 155,
     },
     img: {
-        height: 250,
-        width: 150,
-        marginBottom: 10,
+        height: 245,
+        width: 145,
+        borderRadius: 20,
+    },
+    txtTitle: {
+        width: 230,
+        fontSize: 22,
+        marginBottom: 5,
+        fontWeight: 'bold'
+    },
+    topTxt: {
+        color: '#292929',
+        width: 190,
+        fontSize: 18,
+        marginBottom: 5,
+    },
+    bottomTxtContainer: {
+        marginLeft: 10,
+        marginRight: 10
+    },
+    bottomTitleTxt: {
+        color: '#292929',
+        fontSize: 20,
+        marginBottom: 5,
+        fontWeight: 'bold'
+    },
+    bottomTxt:{
+        color: '#292929',
+        fontSize: 18,
+        marginBottom: 5,
     },
 });
 
 const landscape_styles = StyleSheet.create({
-    MainContainer: {
+    mainTopContainer: {
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: "center",
-        justifyContent: 'space-around'
-    },
-    CardContainer: {
-        flex: 0,
-        alignItems: "center",
-        justifyContent: "space-between",
-    },
-    ViewContainer: {
-        height: 300,
-        alignItems: "center",
         justifyContent: "center",
     },
-    title: {
-        fontSize: 20,
-        width: 250,
-        flex: 0,
-        textAlign: 'center',
-        alignItems: "center",
-        marginBottom: 10,
+    topRightContainer: {
+        //something like sheet
     },
-    TextContainer: {
-        flexDirection: 'row',
-        alignItems: "center",
-        justifyContent: "space-between",
-    },
-    description: {
-        fontSize: 20,
-        flex: 0,
-        textAlign: 'center',
-        alignItems: "center",
-        flexWrap: 'wrap',
+    imgContainer: {
+        marginTop: 25,
+        height: 255,
+        width: 155,
     },
     img: {
-        height: 250,
-        width: 150,
-        marginBottom: 10,
+        height: 245,
+        width: 145,
+        borderRadius: 20,
+    },
+    txtTitle: {
+        width: 230,
+        fontSize: 22,
+        marginBottom: 5,
+        fontWeight: 'bold'
+    },
+    topTxt: {
+        color: '#292929',
+        width: 190,
+        fontSize: 18,
+        marginBottom: 5,
+    },
+    bottomTxtContainer: {
+        marginLeft: 10,
+        marginRight: 10
+    },
+    bottomTitleTxt: {
+        color: '#292929',
+        fontSize: 20,
+        marginBottom: 5,
+        fontWeight: 'bold'
+    },
+    bottomTxt:{
+        color: '#292929',
+        fontSize: 18,
+        marginBottom: 5,
     },
 });
 
@@ -124,8 +131,8 @@ const Info = ({route}) => {
                             data.map((item, index) => {
                             return(
                                 <View key={index}>
-                                    <View>
-                                        <View>
+                                    <View style={orientation().mainTopContainer}>
+                                        <TouchableHighlight style={orientation().imgContainer}>
                                             <Image
                                                 resizeMode="cover"
                                                 source={
@@ -133,58 +140,71 @@ const Info = ({route}) => {
                                                 }
                                                 style={orientation().img}
                                             />
+                                        </TouchableHighlight>
+                                        <View style={orientation().topRightContainer}>
+                                            <Text style={orientation().txtTitle}>
+                                                {item.Title}
+                                            </Text>
+                                            <View>
+                                                <Text
+                                                    style={orientation().topTxt
+                                                }>
+                                                    Year - {item.Year}
+                                                </Text>
+                                            </View>
+                                            <View>
+                                                <Text
+                                                    style={orientation().topTxt
+                                                }>
+                                                    Rating: {item.imdbRating}
+                                                </Text>
+                                                <Text
+                                                    style={orientation().topTxt
+                                                }>
+                                                    {item.imdbVotes} people voted
+                                                </Text>
+                                            </View>
+                                            <View>
+                                                <Text
+                                                    style={orientation().topTxt
+                                                }>
+                                                    Genre
+                                                </Text>
+                                                <Text
+                                                    style={orientation().topTxt
+                                                }>
+                                                    {item.Genre}
+                                                </Text>
+                                            </View>
+                                            <View>
+                                                <Text
+                                                    style={orientation().topTxt
+                                                }>
+                                                    Duration - {item.Runtime}
+                                                </Text>
+                                            </View>
                                         </View>
-                                        <Text>
-                                            {item.Title}
-                                        </Text>
-                                        <View>
-                                            <View>
-                                                <Text>Year</Text>
-                                                <Text>{item.Year}</Text>
-                                            </View>
-                                            <View>
-                                                <Text>Rating: {item.imdbRating}</Text>
-                                                <Text>{item.imdbVotes} people voted</Text>
-                                            </View>
-                                            <View>
-                                                <Text>Genre</Text>
-                                                <Text>{item.Genre}</Text>
-                                            </View>
-                                            <View>
-                                                <Text>Duration</Text>
-                                                <Text>{item.Runtime}</Text>
-                                            </View>
-                                            <View>
-                                                <Text>Released</Text>
-                                                <Text>{item.Released}</Text>
-                                            </View>
-                                            <View>
-                                                <Text>Type</Text>
-                                                <Text>{item.Type}</Text>
-                                            </View>
-                                        </View>
                                     </View>
-                                    <View>
-                                        <Text>Authors</Text>
-                                        <Text>Director - {item.Director}</Text>
-                                        <Text>Writer - {item.Writer}</Text>
-                                    </View>
-                                    <View>
-                                        <Text>Main Cast</Text>
-                                        <View>
-                                            <Text>{item.Actors}</Text>
-                                        </View>
-                                    </View>
-                                    <View>
-                                        <Text>Synopsis</Text>
-                                        <Text>{item.Plot}</Text>
-                                    </View>
-                                    <View>
-                                        <Text>Description</Text>
-                                        <Text>The original language of this film - {item.Language}.
+                                    <View style={orientation().bottomTxtContainer}>
+                                        <Text style={orientation().bottomTitleTxt}>Type</Text>
+                                        <Text style={orientation().bottomTxt}>{item.Type}</Text>
+                                        <Text style={orientation().bottomTitleTxt}>Director</Text>
+                                        <Text style={orientation().bottomTxt}>{item.Director}</Text>
+                                        <Text style={orientation().bottomTitleTxt}>Writer</Text>
+                                        <Text style={orientation().bottomTxt}>{item.Writer}</Text>
+                                        <Text style={orientation().bottomTitleTxt}>Main Cast</Text>
+                                        <Text style={orientation().bottomTxt}>{item.Actors}</Text>
+                                        <Text style={orientation().bottomTitleTxt}>Synopsis</Text>
+                                        <Text style={orientation().bottomTxt}>{item.Plot}</Text>
+                                        <Text style={orientation().bottomTitleTxt}>Released</Text>
+                                        <Text style={orientation().bottomTxt}>{item.Released}</Text>
+                                        <Text style={orientation().bottomTitleTxt}>Other information</Text>
+                                        <Text style={orientation().bottomTxt}>
+                                            The original language of this film - {item.Language}.
                                             It was released in {item.Country} by {item.Production}.
                                             Also this film was awarded {item.Awards},
-                                            as well the film was rated by {item.Rated}</Text>
+                                            as well the film was rated by {item.Rated}
+                                        </Text>
                                     </View>
                                 </View>
                             )

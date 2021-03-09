@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {StyleSheet, View, Dimensions,
     Image, Text, ScrollView, TouchableNativeFeedback } from 'react-native';
 import MoviesList from '../MoviesList.json'
-import {Card, ListItem, Button, Header, Input} from 'react-native-elements'
+import {Card} from 'react-native-elements'
 import { getImage } from '../constants/data'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { Appbar, TextInput } from 'react-native-paper';
+import { Appbar} from 'react-native-paper';
 import SearchBar from "react-native-dynamic-search-bar";
-
-// Доробити setState в пошуку фільмів строка 138
-
-// import {NavigationContainer} from "@react-navigation/native";
 
 const portrait_styles = StyleSheet.create({
     MainContainer: {
@@ -52,7 +48,8 @@ const portrait_styles = StyleSheet.create({
     },
     img: {
         height: 250,
-        width: 150,
+        width: 165,
+        borderRadius: 20,
         marginBottom: 10,
     },
 });
@@ -139,11 +136,24 @@ function Movie({navigation, route}){
         if(term.length === 0) {
             return items
         }
+        if(term.trim().length === 0) {
+           return items
+        }
         return items.filter((item) => {
             if(
-                item.Title.indexOf(term) > -1 ||
-                item.Year.indexOf(term) > -1 ||
-                item.Type.indexOf(term) > -1) {
+                item.Title
+                    .replace(/[^a-zA-Z ]/g, "")
+                    .toLowerCase()
+                    // .replace(/,/g, '')
+                    .indexOf(term)> -1 ||
+                item.Year
+                    .replace(/[^a-zA-Z ]/g, "")
+                    .toLowerCase()
+                    .indexOf(term) > -1 ||
+                item.Type
+                    .replace(/[^a-zA-Z ]/g, "")
+                    .toLowerCase()
+                    .indexOf(term) > -1 ){
                 return (
                     item
                 )
@@ -170,8 +180,14 @@ function Movie({navigation, route}){
                     <Appbar.Action icon="home" onPress={goHome} />
                     <SearchBar
                         placeholder="Search here"
-                        onPress={() => alert("onPress")}
-                        onChangeText={(text) => console.log(text)}
+                        onChangeText={(text) =>
+                            setTerm(
+                                text.toLowerCase()
+                                    .replace(/[^a-zA-Z ]/g, "")
+                                    .replace(/\s+/g, ' ')
+                                    .trim()
+                                    .replace(/,/g, '')
+                            )}
                         style={{flex: 1}}
                     />
                     <Appbar.Action
@@ -194,7 +210,6 @@ function Movie({navigation, route}){
                                 key={index}
                                 onPress={() => {
                                     navigation.navigate('Details');
-                                    console.log(item.imdbID);
                                     navigation.navigate('Details', {
                                         Title: item.Title,
                                         Poster: item.Poster,
@@ -203,26 +218,35 @@ function Movie({navigation, route}){
                                 }}
                             >
                                 <Card>
-                                    <View>
-                                        <Icon
-                                            onPress={() => {
-                                                deleteElement(item.imdbID)
-                                            }}
-                                            style={[{
-                                                color: '#000',
-                                                flex: 0,
-                                                textAlign: 'center',
-                                                alignItems: "center",
-                                            }]}
-                                            size={25}
-                                            name={'trash'}
-                                        />
+                                    <View style={{
+                                        flex: 1,
+                                        flexDirection: 'row',
+                                        flexWrap: 'wrap',
+                                        // justifyContent: 'space-around'
+                                    }}>
+                                        <Text style={orientation().title}>{
+                                            item.Title.length >= 20 ?
+                                                item.Title.slice(0, 85 - 1) + '…'
+                                                : item.Title
+                                        }</Text>
+                                        <View style={{
+                                            marginLeft: 10,
+                                            width: 20,
+                                            height: 25,
+                                        }}>
+                                            <Icon
+                                                onPress={() => {
+                                                    deleteElement(item.imdbID)
+                                                }}
+                                                style={[{
+                                                    color: '#ff7271',
+                                                    flex: 0,
+                                                }]}
+                                                size={25}
+                                                name={'trash'}
+                                            />
+                                        </View>
                                     </View>
-                                    <Text style={orientation().title}>{
-                                        item.Title.length >= 20 ?
-                                            item.Title.slice(0, 85 - 1) + '…'
-                                            : item.Title
-                                    }</Text>
                                     <Card.Divider/>
                                     <View style={orientation().ViewContainer}>
                                         <Image

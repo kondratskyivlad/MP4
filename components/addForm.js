@@ -1,14 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {StyleSheet, View, Dimensions,
-     Image, Text, ScrollView,
+    Text, ScrollView,
     TouchableOpacity} from 'react-native';
-import MoviesList from '../MoviesList.json'
-import { Card, ListItem, Button, Icon } from 'react-native-elements'
-import { getImage } from '../constants/data'
-import { Input } from 'react-native-elements';
+import { Button } from 'react-native-elements'
 import { FloatingLabelInput } from 'react-native-floating-label-input';
-// import ButtonComponent,
-// { CircleButton, RoundButton, RectangleButton } from 'react-native-button-component';
 
 
 
@@ -57,9 +52,19 @@ const AddForm = ({navigation, route}, props) => {
 
     const parsed = parseInt(year);
 
-    if (isNaN(parsed)) {
+    if(title === '') {
+        setTitle('You must entered Title')
+        setTimeout(() => {
+            setTitle('')
+        }, 2000);
+    } else if (type === ''){
+        setType('You must entered Type')
+        setTimeout(() => {
+            setType('')
+        }, 2000);
+    } else if (isNaN(parsed)) {
         setYear('The year must be a number')
-        const warning = setTimeout(() => {
+        setTimeout(() => {
             setYear('')
         }, 2000);
     } else {
@@ -87,6 +92,7 @@ const AddForm = ({navigation, route}, props) => {
                 <View style={{marginBottom: 20}}>
                     <FloatingLabelInput
                         countdownLabel="chars left"
+                        placeholder={''}
                         maxLength={100}
                         showCountdown={true}
                         style={{color: '#fff'}}
@@ -150,14 +156,12 @@ const AddForm = ({navigation, route}, props) => {
                 <View style={{ flex: 1, alignItems: 'center' }}>
                     <Button
                         onPress={() => {
-                            // navigation.navigate()
                             submit()
                         }}
                         theme={submitBtn}
                         title="Add"
                         color="#000"
                         buttonStyle={{ width: 150 }}
-                        // loading={false}
                     />
                 </View>
             </View>
